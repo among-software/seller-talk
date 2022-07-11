@@ -1,6 +1,5 @@
 from flask import Flask, request, jsonify
-from services import naver_smart_store, search_volume, crawling
-from controller import simple_data_controller
+from controller import simple_data_controller, category_list_controller
 app = Flask(__name__)
 
 
@@ -15,6 +14,11 @@ def return_simple_data():
     #                                   gender=request.args.get('gender'),
     #                                   ages=request.args.get('ages'))
     return simple_data_controller.data_controller(request.args.get('keyword'))
+
+
+@app.route("api/category-list", classmethod=['GET'])
+def category_list():
+    return category_list_controller.category_list_controller(request.args.get('keyword'))
 
 
 if __name__ == "__main__":
