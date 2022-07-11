@@ -16,7 +16,7 @@ def return_simple_data():
     return simple_data_controller.data_controller(request.args.get('keyword'))
 
 
-@app.route("api/category-list", classmethod=['GET'])
+@app.route("/api/category-list/", methods=['GET'])
 def category_list():
     return category_list_controller.category_list_controller(request.args.get('keyword'))
 
