@@ -1,32 +1,55 @@
 import json
 import requests
+from collections import Counter
 
 
-def crawling(query):
-    if query:
-        product_list = []
-        product_dict = {}
+def crawling(keyword):
 
-        url = f"https://search.shopping.naver.com/api/search/all?frm=NVSHCHK&origQuery={query}&pagingIndex=1&pagingSize=80&productSet=checkout&query={query}&sort=rel&timestamp=&viewType=list"
-        r = requests.get(url)
-        json_str = json.loads(json.dumps(r.json()))
-        val1 = json_str['shoppingResult']["products"]
-        for idx, val in enumerate(val1):
-            product_name = val["productName"]
-            origin_price = val['price']
-            # low_price = val["lowPrice"]
-            # rank = val["rank"]
-            mall_name = val["mallName"]
-            category = val["category2Name"], ">", val["category3Name"], ">", val["category4Name"]
+    url = f"https://search.shopping.naver.com/api/search/all?frm=NVSHCHK&origQuery={keyword}&pagingIndex=1&pagingSize=40&productSet=checkout&query={keyword}&sort=rel&timestamp=&viewType=list"
+    r = requests.get(url)
+    json_str = json.loads(json.dumps(r.json()))
 
-            product_dict["상품명"] = product_name
-            product_dict["가격"] = origin_price
-            # product_dict["세일된가격"] = low_price
-            product_dict["판매처"] = mall_name
-            product_dict["카테고리"] = category
-            product_list.append(product_dict.copy())
+    val1 = json_str['shoppingResult']["products"]
+    category_id = json_str['mainFilters'][0]["filterValues"][0]["value"]
+    total_product = json_str['shoppingResult']['orgQueryTotal']
+    category_list = []
 
-        print(product_list)
-        return '''<h1>successfully search</h1>'''
+    for idx, val in enumerate(val1):
+        category = val["category1Name"] + "," + val["category2Name"] + "," + val["category3Name"] + "," +\
+                   val["category4Name"]
+        category_list.append(category)
+
+    counter = Counter(category_list)
+    if len(counter) < 2:
+        rel_category_one_percent = str("%.0f" % (100.0 * counter.most_common(n=2)[0][1] / 40.0) + '%')
+        category_name_list1 = str(counter.most_common(n=2)[0][0]).split(',')
+        crawling_data = {
+            "category_id": category_id,
+            "total_product": total_product,
+            "categories": [{
+                'title': category_name_list1,
+                'percent': rel_category_one_percent
+            }]
+        }
     else:
-        return '''<h1>no value</h1>'''
+        rel_category_one_percent = str("%.0f" % (100.0 * counter.most_common(n=2)[0][1] / 40.0) + '%')
+        rel_category_two_percent = str("%.0f" % (100.0 * counter.most_common(n=2)[1][1] / 40.0) + '%')
+        category_name_list1 = str(counter.most_common(n=2)[0][0]).split(',')
+        category_name_list2 = str(counter.most_common(n=2)[1][0]).split(',')
+
+        crawling_data = {
+            "category_id": category_id,
+            "total_product": total_product,
+            "categories": [
+                {
+                    'title': category_name_list1,
+                    'percent': rel_category_one_percent
+                },
+                {
+                    'title': category_name_list2,
+                    'percent': rel_category_two_percent
+                }
+            ]
+        }
+
+    return json.dumps(crawling_data, ensure_ascii=False)
