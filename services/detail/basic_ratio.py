@@ -1,5 +1,7 @@
-import os, hashlib, hmac, base64, requests, time
+import json
+import os, hashlib, hmac, base64, requests, time, math, datetime, dateutil.relativedelta
 from dotenv import load_dotenv
+from services import naver_smart_store
 
 load_dotenv()
 
@@ -10,6 +12,7 @@ SECRET_KEY = os.getenv('AD_API_SECRET')
 
 
 def search_volume(keyword):
+
     def generate(timestamp, method, uri, secret_key):
         message = "{}.{}.{}".format(timestamp, method, uri)
     #     hash = hmac.new(bytes(secret_key, "utf-8"), bytes(message, "utf-8"), hashlib.sha256)
@@ -38,5 +41,18 @@ def search_volume(keyword):
     kwd_list = [keyword]
     kwds_string = ','.join(kwd_list)
     return_data = call_RelKwdStat(kwds_string)
+    now = datetime.datetime.now().replace(second=0, microsecond=0)
+    now = now.date()
+    previous_now = now + dateutil.relativedelta.relativedelta(months=-1, days=-1, second=0, microsecond=0)
+    previous_now = previous_now.date()
 
-    return return_data
+    all_ratio = naver_smart_store.get_shopping_keyword_trend(start_date=previous_now, end_date=now, keyword=keyword)
+    for i in return_data['keywordList'][0:1]:
+        total = i['monthlyMobileQcCnt'] + i['monthlyPcQcCnt']
+
+    daily = math.ceil(total / all_ratio['ratio_sum'])
+
+    basic_ratio = all_ratio['ratio_list'][0]['ratio']
+    one_day_search = basic_ratio * daily
+    one_ratio = one_day_search / basic_ratio
+    return one_ratio

@@ -17,13 +17,14 @@ def data_controller(keyword):
             mo_query_count = 9
         competitive_strength_str = i['compIdx']
         total_num = total_product.get_total_product(keyword)
-        competitive_strength = total_num / pc_query_count + mo_query_count
+        competitive_strength = round(total_num / (pc_query_count + mo_query_count), 2)
         single_data = {
             'keyword': i['relKeyword'],
-            'pcQuery': pc_query_count,
-            'moQuery': mo_query_count,
-            'totalproduct': competitive_strength,
-            'competitiveStrengthStr': competitive_strength_str
+            'pc': pc_query_count,
+            'mobile': mo_query_count,
+            'items': total_num,
+            'competition': competitive_strength,
+            # 'competitiveStrengthStr': competitive_strength_str
         }
         # 연관검색어 요청시 살리기
         # search_list.append(single_data)

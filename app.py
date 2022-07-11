@@ -1,24 +1,24 @@
-from flask import Flask, request, jsonify
-from controller import simple_data_controller, category_list_controller
+from flask import Flask, request
+from controller import simple_data_controller, category_list_controller, detail_controller
+from flask_cors import CORS, cross_origin
 app = Flask(__name__)
+
+CORS(app)
 
 
 @app.route("/api/simple-data/", methods=['GET'])
 def return_simple_data():
-    # return get_shopping_keyword_trend(start_date=request.args.get('start-date'),
-    #                                   end_date=request.args.get('end-date'),
-    #                                   time_unit=request.args.get('time-unit'),
-    #                                   category=request.args.get('category'),
-    #                                   keyword=request.args.get('keyword'),
-    #                                   device=request.args.get('device'),
-    #                                   gender=request.args.get('gender'),
-    #                                   ages=request.args.get('ages'))
     return simple_data_controller.data_controller(request.args.get('keyword'))
 
 
 @app.route("/api/category-list/", methods=['GET'])
 def category_list():
     return category_list_controller.category_list_controller(request.args.get('keyword'))
+
+
+@app.route("/api/detail/", methods=['GET'])
+def detail():
+    return detail_controller.detail_controller(request.args.get('start-date'), request.args.get('end-date'), request.args.get('keyword'))
 
 
 if __name__ == "__main__":
