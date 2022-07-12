@@ -28,21 +28,42 @@ def search_volume(start_date, end_date, keyword, one_ratio):
     for i in all_ratio['ratio_list']:
         ratio_dict = {'x': i['period'], 'y': math.ceil(i['ratio'] * one_ratio / 10) * 10}
         daily_list.append(ratio_dict)
-
+    #
+    # if len(daily_list) < date_diff.days:
+    #     for j in range(date_diff.days + 1):
+    #         if not daily_list:
+    #             daily_list.insert(j, {'x': str(first_search), 'y': 0})
+    #             first_search = first_search + timedelta(days=1)
+    #         if daily_list:
+    #             if daily_list[j]['x'] == str(first_search):
+    #                 first_search = first_search + timedelta(days=1)
+    #             else:
+    #                 daily_list.append({'x': str(first_search), 'y': 0})
+    #                 first_search = first_search + timedelta(days=1)
+    #
+    # sorted_list = sorted(daily_list, key=(lambda x: x['x']))
+    # delete_list = []
+    # for index in range(len(sorted_list)):
+    #     if sorted_list[index - 1]['x'] == sorted_list[index]['x']:
+    #         delete_list.append(sorted_list[index])
+    #
+    # for i in delete_list:
+    #     for j in sorted_list:
+    #         if i == j:
+    #             sorted_list.remove(j)
+    idx = 0
     if len(daily_list) < date_diff.days:
         for j in range(date_diff.days + 1):
-            if not daily_list:
-                daily_list.insert(j, {'x': str(first_search), 'y': 0})
-                first_search = first_search + timedelta(days=1)
-            if daily_list:
-                if daily_list[j]['x'] == str(first_search):
-                    first_search = first_search + timedelta(days=1)
-                else:
-                    daily_list.append({'x': str(first_search), 'y': 0})
-                    first_search = first_search + timedelta(days=1)
+            if len(daily_list) and (first_search + timedelta(days=j)) == datetime.strptime(daily_list[idx]['x'], '%Y-%m-%d').date():
+                idx += 1
+            else:
+                daily_list.append({'x': str(first_search + timedelta(days=j)), 'y': 0})
 
     sorted_list = sorted(daily_list, key=(lambda x: x['x']))
-    for values in sorted_list:
-        print(values)
+    delete_list = []
+    for index in range(len(sorted_list)):
+        if sorted_list[index - 1]['x'] == sorted_list[index]['x']:
+            delete_list.append(sorted_list[index])
+
     return json.dumps(sorted_list, ensure_ascii=False)
 

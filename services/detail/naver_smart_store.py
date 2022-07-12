@@ -107,8 +107,14 @@ def get_shopping_keyword_trend_by_device(start_date, end_date, keyword):
         else:
             mobile_sum += i['ratio']
     average = pc_sum + mobile_sum
-    pc_average = round(pc_sum / average * 100)
-    mobile_average = round(mobile_sum / average * 100)
+    if pc_sum > 0:
+        pc_average = round(pc_sum / average * 100)
+    else:
+        pc_average = 0
+    if mobile_sum > 0:
+        mobile_average = round(mobile_sum / average * 100)
+    else:
+        mobile_average = 0
 
     if response_code == 200:
         return {"pc": pc_average, "mobile": mobile_average}
@@ -155,12 +161,31 @@ def get_shopping_keyword_trend_by_age(start_date, end_date, keyword):
         if i['group'] == '60':
             sixty_sum += i['ratio']
     average = teen_sum + twenty_sum + thirty_sum + forty_sum + fifty_sum + sixty_sum
-    teen_average = round(teen_sum / average * 100)
-    twenty_average = round(twenty_sum / average * 100)
-    thirty_average = round(thirty_sum / average * 100)
-    forty_average = round(forty_sum / average * 100)
-    fifty_average = round(fifty_sum / average * 100)
-    sixty_average = round(sixty_sum / average * 100)
+
+    if teen_sum > 0:
+        teen_average = round(teen_sum / average * 100)
+    else:
+        teen_average = 0
+    if twenty_sum > 0:
+        twenty_average = round(twenty_sum / average * 100)
+    else:
+        twenty_average = 0
+    if thirty_sum > 0:
+        thirty_average = round(thirty_sum / average * 100)
+    else:
+        thirty_average = 0
+    if forty_sum > 0:
+        forty_average = round(forty_sum / average * 100)
+    else:
+        forty_average = 0
+    if fifty_sum > 0:
+        fifty_average = round(fifty_sum / average * 100)
+    else:
+        fifty_average = 0
+    if sixty_sum > 0:
+        sixty_average = round(sixty_sum / average * 100)
+    else:
+        sixty_average = 0
 
     if response_code == 200:
         return {"10대": teen_average, "20대": twenty_average, "30대": thirty_average,

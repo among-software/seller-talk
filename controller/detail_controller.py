@@ -9,6 +9,7 @@ def detail_controller(start_date, end_date, keyword):
     ages = naver_smart_store.get_shopping_keyword_trend_by_age(start_date, end_date, keyword)
     one_day_search = basic_ratio.search_volume(keyword)
     daily = daily_search.search_volume(start_date, end_date, keyword, one_day_search)
+
     data_dict = {
         'data': daily,
         'sex': {
