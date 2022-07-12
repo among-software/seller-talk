@@ -1,5 +1,7 @@
 import json
 import os, hashlib, hmac, base64, requests, time, math, datetime, dateutil.relativedelta
+import random
+
 from dotenv import load_dotenv
 from services import naver_smart_store
 
@@ -43,15 +45,27 @@ def search_volume(keyword):
     return_data = call_RelKwdStat(kwds_string)
     now = datetime.datetime.now().replace(second=0, microsecond=0)
     now = now.date()
+    current_date = now + dateutil.relativedelta.relativedelta(days=-1, second=0, microsecond=0)
+    current_date = current_date.date()
     previous_now = now + dateutil.relativedelta.relativedelta(months=-1, days=-1, second=0, microsecond=0)
     previous_now = previous_now.date()
 
-    all_ratio = naver_smart_store.get_shopping_keyword_trend(start_date=previous_now, end_date=now, keyword=keyword)
+    all_ratio = naver_smart_store.get_shopping_keyword_trend(start_date=previous_now, end_date=current_date, keyword=keyword)
+
+    total_product = 0
     for i in return_data['keywordList'][0:1]:
+        if i['monthlyPcQcCnt'] == '< 10':
+            i['monthlyPcQcCnt'] = random.randrange(0, 9)
+        if i['monthlyMobileQcCnt'] == '< 10':
+            i['monthlyMobileQcCnt'] = random.randrange(0, 9)
         total = i['monthlyMobileQcCnt'] + i['monthlyPcQcCnt']
+        total_product += total
 
-    daily = math.ceil(total / all_ratio['ratio_sum'])
-
+    if all_ratio['ratio_sum'] == 0:
+        all_ratio['ratio_sum'] = 1
+    if len(all_ratio['ratio_list']) == 0:
+        all_ratio['ratio_list'].append({'ratio': 1})
+    daily = total_product / all_ratio['ratio_sum']
     basic_ratio = all_ratio['ratio_list'][0]['ratio']
     one_day_search = basic_ratio * daily
     one_ratio = one_day_search / basic_ratio

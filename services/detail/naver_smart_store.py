@@ -16,8 +16,7 @@ def get_shopping_keyword_trend(start_date, end_date, keyword):
     payload = {'startDate': str(start_date),
                'endDate': str(end_date),
                'timeUnit': 'date',
-               'category': get_category_id.get_category_id(keyword),
-               'keywordGroups': [{'groupName': str(keyword), 'keywords': [keyword]}],
+               'keywordGroups': [{'groupName': str(keyword), 'keywords': [str(keyword)]}],
                'device': "",
                'gender': "",
                'ages': []}
@@ -42,11 +41,10 @@ def get_shopping_keyword_trend(start_date, end_date, keyword):
 
 def get_shopping_keyword_trend_by_gender(start_date, end_date, keyword):
     open_api_url = "https://openapi.naver.com/v1/datalab/shopping/category/keyword/gender"
-
     payload = {'startDate': str(start_date),
                'endDate': str(end_date),
                'timeUnit': 'date',
-               'category': get_category_id.get_category_id(keyword),
+               'category': str(get_category_id.get_category_id(keyword)),
                'keyword': str(keyword),
                'device': "",
                'gender': "",
@@ -58,17 +56,23 @@ def get_shopping_keyword_trend_by_gender(start_date, end_date, keyword):
 
     response_code = request.status_code
     response_message = request.json()
-
     male_sum = 0
     female_sum = 0
     for i in response_message['results'][0]['data']:
         if i['group'] == 'm':
             male_sum += i['ratio']
-        else:
+        if i['group'] == 'f':
             female_sum += i['ratio']
+
     average = male_sum + female_sum
-    male_average = round(male_sum / average * 100)
-    female_average = round(female_sum / average * 100)
+    if male_sum > 0:
+        male_average = round((male_sum / average) * 100)
+    else:
+        male_average = 0
+    if female_sum > 0:
+        female_average = round((female_sum / average) * 100)
+    else:
+        female_average = 0
 
     if response_code == 200:
         return {"male": male_average, "female": female_average}
@@ -82,7 +86,7 @@ def get_shopping_keyword_trend_by_device(start_date, end_date, keyword):
     payload = {'startDate': str(start_date),
                'endDate': str(end_date),
                'timeUnit': 'date',
-               'category': get_category_id.get_category_id(keyword),
+               'category': str(get_category_id.get_category_id(keyword)),
                'keyword': str(keyword),
                'device': "",
                'gender': "",
@@ -118,7 +122,7 @@ def get_shopping_keyword_trend_by_age(start_date, end_date, keyword):
     payload = {'startDate': str(start_date),
                'endDate': str(end_date),
                'timeUnit': 'date',
-               'category': get_category_id.get_category_id(keyword),
+               'category': str(get_category_id.get_category_id(keyword)),
                'keyword': str(keyword),
                'device': "",
                'gender': "",

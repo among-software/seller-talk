@@ -18,7 +18,9 @@ def category_list():
 
 @app.route("/api/detail/", methods=['GET'])
 def detail():
-    return detail_controller.detail_controller(request.args.get('start-date'), request.args.get('end-date'), request.args.get('keyword'))
+    return detail_controller.detail_controller(start_date=request.args.get('start-date'),
+                                               end_date=request.args.get('end-date'),
+                                               keyword=request.args.get('keyword'))
 
 
 if __name__ == "__main__":

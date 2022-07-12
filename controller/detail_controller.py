@@ -1,5 +1,6 @@
 from services.detail import naver_smart_store, daily_search, basic_ratio
 import json
+from services import get_category_id
 
 
 def detail_controller(start_date, end_date, keyword):
@@ -19,12 +20,12 @@ def detail_controller(start_date, end_date, keyword):
             "mobile": device['mobile']
         },
         'ages': {
-            "10": ages['10'],
-            "20": ages['20'],
-            "30": ages['30'],
-            "40": ages['40'],
-            "50": ages['50'],
-            "60": ages['60']
+            "10대": ages['10대'],
+            "20대": ages['20대'],
+            "30대": ages['30대'],
+            "40대": ages['40대'],
+            "50대": ages['50대'],
+            "60대": ages['60대']
         }
     }
     return json.dumps(data_dict, ensure_ascii=False)
