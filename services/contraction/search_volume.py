@@ -8,7 +8,7 @@ CUSTOMER_ID = os.getenv('CUSTOMER_ID')
 API_KEY = os.getenv('AD_API_KEY')
 SECRET_KEY = os.getenv('AD_API_SECRET')
 
-# naver ads api
+# naver ads ap
 def search_volume(keyword):
     def generate(timestamp, method, uri, secret_key):
         message = "{}.{}.{}".format(timestamp, method, uri)
