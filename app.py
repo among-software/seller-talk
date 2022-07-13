@@ -1,3 +1,4 @@
+import requests
 from flask import Flask, request
 from controller import simple_data_controller, category_list_controller, detail_controller, related_controller
 from flask_cors import CORS, cross_origin
@@ -26,6 +27,7 @@ def detail():
 @app.route("/api/related/", methods=['GET'])
 def related():
     return related_controller.controller(keyword=request.args.get('keyword'))
+
 
 
 if __name__ == "__main__":
