@@ -24,7 +24,8 @@ def controller(keyword):
             'mobile': mo_query_count,
             'items': total_num,
             'competition': competitive_strength,
-            'category': category_list.crawling(relation_keyword_stat['relKeyword'])
+            'category': category_list.crawling(relation_keyword_stat['relKeyword']),
+            'classification': '쇼핑성'
         })
 
     return json.dumps(response, ensure_ascii=False)
