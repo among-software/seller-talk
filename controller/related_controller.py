@@ -18,14 +18,19 @@ def controller(keyword):
             mo_query_count = 9
         total_num = total_product.get_total_product(keyword)
         competitive_strength = round(total_num / (pc_query_count + mo_query_count), 2)
+        category = json.loads(category_list.crawling(relation_keyword_stat['relKeyword']))['categories'][0]
+
         response.append({
             'keyword': relation_keyword_stat['relKeyword'],
             'pc': pc_query_count,
             'mobile': mo_query_count,
             'items': total_num,
             'competition': competitive_strength,
-            'category': category_list.crawling(relation_keyword_stat['relKeyword']),
-            'classification': '쇼핑성'
+            'category': category['title'][-1],
+            'classification': {
+                'class': '쇼핑성',
+                'percent': 83
+            }
         })
 
     return json.dumps(response, ensure_ascii=False)
