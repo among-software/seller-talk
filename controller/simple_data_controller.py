@@ -1,6 +1,7 @@
 import json
 
-from services.contraction import search_volume, total_product
+from services.contraction import search_volume
+from services import total_product
 
 
 def data_controller(keyword):
