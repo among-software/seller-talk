@@ -12,7 +12,7 @@ def get_naver_web_doc(keyword):
     response_html = request.text
     keyword_order = response_html
     if response_code == 200:
-        return str(response_message)
+        return str(response_html)
     else:
         print("Error Code : " + str(response_code))
         return str(response_code)
