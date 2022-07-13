@@ -1,5 +1,5 @@
 from flask import Flask, request
-from controller import simple_data_controller, category_list_controller, detail_controller
+from controller import simple_data_controller, category_list_controller, detail_controller, related_controller
 from flask_cors import CORS, cross_origin
 app = Flask(__name__)
 
@@ -21,6 +21,11 @@ def detail():
     return detail_controller.detail_controller(start_date=request.args.get('start-date'),
                                                end_date=request.args.get('end-date'),
                                                keyword=request.args.get('keyword'))
+
+
+@app.route("/api/related/", methods=['GET'])
+def related():
+    return related_controller.controller(keyword=request.args.get('keyword'))
 
 
 if __name__ == "__main__":
