@@ -5,7 +5,7 @@ from services import total_product
 from services.detail_category import category_list
 from services.related import web_doc
 
-
+# related_contoller
 def controller(keyword):
     search_volume_data = search_volume.search_volume(keyword)
     response = []
