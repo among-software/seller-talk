@@ -26,8 +26,11 @@ def detail():
 
 @app.route("/api/related/", methods=['GET'])
 def related():
-    return related_controller.controller(keyword=request.args.get('keyword'))
-
+    return related_controller.controller(keyword=request.args.get('keyword'),
+                                         keyword_classifiction=request.args.get('classification'),
+                                         keyword_volume=request.args.get('volume'),
+                                         keyword_product=request.args.get('product'),
+                                         competitive_strength=request.args.get('competition'))
 
 
 if __name__ == "__main__":
