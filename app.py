@@ -1,7 +1,10 @@
+import asyncio
+
 import requests
-from flask import Flask, request
+from flask import Flask, request, Response, jsonify
 from controller import simple_data_controller, category_list_controller, detail_controller, related_controller
 from flask_cors import CORS, cross_origin
+import json
 app = Flask(__name__)
 
 CORS(app)
@@ -26,11 +29,12 @@ def detail():
 
 @app.route("/api/related/", methods=['GET'])
 def related():
-    return related_controller.controller(keyword=request.args.get('keyword'),
-                                         keyword_classifiction=request.args.get('classification'),
+    loop = asyncio.new_event_loop()
+    return json.dumps(loop.run_until_complete(related_controller.controller(keyword=request.args.get('keyword'),
+                                         keyword_classification=request.args.get('classification'),
                                          keyword_volume=request.args.get('volume'),
                                          keyword_product=request.args.get('product'),
-                                         competitive_strength=request.args.get('competition'))
+                                         competitive_strength=request.args.get('competition'))), ensure_ascii=False)
 
 
 if __name__ == "__main__":

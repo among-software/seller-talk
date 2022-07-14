@@ -1,6 +1,6 @@
 import os, hashlib, hmac, base64, requests, time
 from dotenv import load_dotenv
-
+import asyncio
 load_dotenv()
 
 BASE_URL = 'https://api.naver.com'
@@ -8,8 +8,10 @@ CUSTOMER_ID = os.getenv('CUSTOMER_ID')
 API_KEY = os.getenv('AD_API_KEY')
 SECRET_KEY = os.getenv('AD_API_SECRET')
 
+
 # naver ads api
 def search_volume(keyword):
+
     def generate(timestamp, method, uri, secret_key):
         message = "{}.{}.{}".format(timestamp, method, uri)
     #     hash = hmac.new(bytes(secret_key, "utf-8"), bytes(message, "utf-8"), hashlib.sha256)
