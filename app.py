@@ -29,12 +29,12 @@ def detail():
 
 @app.route("/api/related/", methods=['GET'])
 def related():
-    loop = asyncio.new_event_loop()
-    return json.dumps(loop.run_until_complete(related_controller.controller(keyword=request.args.get('keyword'),
-                                         keyword_classification=request.args.get('classification'),
-                                         keyword_volume=request.args.get('volume'),
-                                         keyword_product=request.args.get('product'),
-                                         competitive_strength=request.args.get('competition'))), ensure_ascii=False)
+    return json.dumps(related_controller.controller(keyword=request.args.get('keyword'),
+                                                    keyword_classification=request.args.get('classification'),
+                                                    keyword_volume=request.args.get('volume'),
+                                                    keyword_product=request.args.get('product'),
+                                                    competitive_strength=request.args.get('competition')),
+                      ensure_ascii=False)
 
 
 if __name__ == "__main__":
