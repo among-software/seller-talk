@@ -92,4 +92,5 @@ def controller(keyword, keyword_classification, keyword_volume, keyword_product,
             time.sleep(1)
 
     loop.close()
+    response = [x for x in response if x is not None]
     return response
