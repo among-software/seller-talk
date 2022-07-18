@@ -1,7 +1,12 @@
-import json
+import json, asyncio
 
 from services.contraction import search_volume
 from services import total_product
+
+
+async def get_total(keyword):
+    total_num = await total_product.get_total_product(keyword)
+    return total_num
 
 
 def data_controller(keyword):
@@ -17,7 +22,7 @@ def data_controller(keyword):
         if mo_query_count == '< 10':
             mo_query_count = 9
         competitive_strength_str = i['compIdx']
-        total_num = total_product.get_total_product(keyword)
+        total_num = asyncio.run(get_total(keyword))
         competitive_strength = round(total_num / (pc_query_count + mo_query_count), 2)
         single_data = {
             'keyword': i['relKeyword'],

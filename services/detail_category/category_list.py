@@ -10,7 +10,7 @@ client_id = os.getenv('NAVER_CLIENT_ID')
 client_secret = os.getenv('NAVER_CLIENT_SECRET')
 
 
-# 카테고리 리스트 반
+# 카테고리 리스트 반환
 async def crawling(keyword):
     open_api_url = f"https://openapi.naver.com/v1/search/shop.json?query={keyword}&display=80"
 
