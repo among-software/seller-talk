@@ -14,7 +14,6 @@ async def get_detail(relation_keyword_stat, keyword, classification, volume, pro
         category_list.crawling(relation_keyword_stat['relKeyword']),
         web_doc.get_naver_web_doc(keyword)
     )
-
     category = json.loads(category)['categories'][0]
 
     pc_query_count = relation_keyword_stat['monthlyPcQcCnt']
@@ -50,7 +49,7 @@ async def get_detail(relation_keyword_stat, keyword, classification, volume, pro
         'totalQuery': total_query,
         'items': total_num,
         'competition': competitive_strength,
-        'category': category['title'][-1],
+        'category': category['title'][2],
         'classification': naver_classification
     }
 

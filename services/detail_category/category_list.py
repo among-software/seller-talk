@@ -22,6 +22,7 @@ async def crawling(keyword):
             category_list = []
             for i in response_message['items']:
                 category = i['category1'] + ',' + i['category2'] + ',' + i['category3'] + ',' + i['category4']
+
                 category_list.append(category)
 
             counter = Counter(category_list)
@@ -38,7 +39,7 @@ async def crawling(keyword):
                 else:
                     crawling_data = {
                         "categories": [{
-                            'title': '카테고리가 없습니다.',
+                            'title': ['카테고리가 없습니다.', '카테고리가 없습니다.',' 카테고리가 없습니다.', '카테고리가 없습니다.'],
                             'percent': '0%'
                         }]
                     }
