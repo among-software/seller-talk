@@ -75,7 +75,8 @@ def controller(keyword, keyword_classification, keyword_volume, keyword_product,
 
     loop = asyncio.new_event_loop()
     # asyncio.set_event_loop(loop)
-    for relation_keyword_stat in search_volume_data['keywordList'][0:20]:
+
+    for relation_keyword_stat in search_volume_data['keywordList'][0:100]:
         task_group.append({
             "relation_keyword_stat": relation_keyword_stat,
             "keyword": keyword,
@@ -85,7 +86,7 @@ def controller(keyword, keyword_classification, keyword_volume, keyword_product,
             "competitve": competitve
         })
 
-        if len(task_group) == 3:
+        if len(task_group) == 5:
             response += loop.run_until_complete(task_gather(task_group))
             task_group = []
             time.sleep(1)

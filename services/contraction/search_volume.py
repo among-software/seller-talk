@@ -11,7 +11,6 @@ SECRET_KEY = os.getenv('AD_API_SECRET')
 
 # naver ads api
 def search_volume(keyword):
-
     def generate(timestamp, method, uri, secret_key):
         message = "{}.{}.{}".format(timestamp, method, uri)
     #     hash = hmac.new(bytes(secret_key, "utf-8"), bytes(message, "utf-8"), hashlib.sha256)
@@ -40,5 +39,4 @@ def search_volume(keyword):
     kwd_list = [keyword]
     kwds_string = ','.join(kwd_list)
     return_data = call_RelKwdStat(kwds_string)
-
     return return_data
