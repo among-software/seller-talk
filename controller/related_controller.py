@@ -111,7 +111,7 @@ def controller(keyword, keyword_classification, keyword_total_query, keyword_ite
             task_group = []
             time.sleep(0.1)
     if len(response) != 20:
-        for relation_keyword_stat in search_volume_data['keywordList'][20-len(response)]:
+        for relation_keyword_stat in search_volume_data['keywordList'][20-len(response):]:
             task_group.append({
                 "relation_keyword_stat": relation_keyword_stat,
                 "keyword": keyword,
