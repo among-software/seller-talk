@@ -109,7 +109,6 @@ def controller(keyword, keyword_classification, keyword_total_query, keyword_ite
         if len(task_group) == 5:
             response += loop.run_until_complete(task_gather(task_group))
             task_group = []
-            time.sleep(1.1)
 
     loop.close()
     response = [x for x in response if x is not None]
