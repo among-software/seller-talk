@@ -17,4 +17,5 @@ async def get_total_product(keyword):
     async with aiohttp.ClientSession() as client:
         async with client.get(open_api_url, headers=headers) as resp:
             response = await resp.json()
+            print(response)
             return response["total"]

@@ -33,7 +33,8 @@ def related():
                                                     keyword_classification=request.args.get('classification'),
                                                     keyword_total_query=request.args.get('total-query'),
                                                     keyword_items=request.args.get('items'),
-                                                    competitive_strength=request.args.get('competition')),
+                                                    competitive_strength=request.args.get('competition'),
+                                                    list_index=request.args.get('list-index')),
                       ensure_ascii=False)
 
 

@@ -1,15 +1,7 @@
 import json
-import os, hashlib, hmac, base64, requests, time, math, collections
-from dotenv import load_dotenv
+import math
 from services import naver_smart_store
 from datetime import datetime, timedelta
-
-load_dotenv()
-
-BASE_URL = 'https://api.naver.com'
-CUSTOMER_ID = os.getenv('CUSTOMER_ID')
-API_KEY = os.getenv('AD_API_KEY')
-SECRET_KEY = os.getenv('AD_API_SECRET')
 
 
 def search_volume(start_date, end_date, keyword, one_ratio):

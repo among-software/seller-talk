@@ -39,7 +39,7 @@ async def crawling(keyword):
                 else:
                     crawling_data = {
                         "categories": [{
-                            'title': ['카테고리가 없습니다.', '카테고리가 없습니다.',' 카테고리가 없습니다.', '카테고리가 없습니다.'],
+                            'title': ['', '', '', ''],
                             'percent': '0%'
                         }]
                     }
