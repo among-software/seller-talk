@@ -109,7 +109,24 @@ def controller(keyword, keyword_classification, keyword_total_query, keyword_ite
         if len(task_group) == 5:
             response += loop.run_until_complete(task_gather(task_group))
             task_group = []
+            time.sleep(0.1)
+    if len(response) != 20:
+        for relation_keyword_stat in search_volume_data['keywordList'][20-len(response)]:
+            task_group.append({
+                "relation_keyword_stat": relation_keyword_stat,
+                "keyword": keyword,
+                "classification": classification,
+                "total_query": total_query,
+                "items": items,
+                "competitve": competitve
+            })
 
+            if len(task_group) == 5:
+                response += loop.run_until_complete(task_gather(task_group))
+                task_group = []
+                time.sleep(0.1)
+            if len(response) == 20:
+                break
     loop.close()
     response = [x for x in response if x is not None]
     return response
