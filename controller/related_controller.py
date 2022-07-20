@@ -34,6 +34,7 @@ async def get_detail(relation_keyword_stat, keyword, classification, total_query
     ad_click_count_average = round((pc_ad_click_count + mo_ad_click_count) / 2, 2)
     if ad_click_count_average == 0:
         ad_click_count_average = 1
+
     competitive_strength = round(total_num / (pc_query_count + mo_query_count), 2)
     total_query_count = pc_query_count + mo_query_count
     ad_click_competition = round(total_num / ad_click_count_average, 2)
