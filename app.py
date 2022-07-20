@@ -31,8 +31,8 @@ def detail():
 def related():
     return json.dumps(related_controller.controller(keyword=request.args.get('keyword'),
                                                     keyword_classification=request.args.get('classification'),
-                                                    keyword_volume=request.args.get('volume'),
-                                                    keyword_product=request.args.get('product'),
+                                                    keyword_total_query=request.args.get('total-query'),
+                                                    keyword_items=request.args.get('items'),
                                                     competitive_strength=request.args.get('competition')),
                       ensure_ascii=False)
 

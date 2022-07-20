@@ -62,12 +62,12 @@ async def task_gather(task_params):
     return await asyncio.gather(*task_group)
 
 
-def controller(keyword, keyword_classification, keyword_volume, keyword_product, competitive_strength):
+def controller(keyword, keyword_classification, keyword_total_query, keyword_items, competitive_strength):
     search_volume_data = search_volume.search_volume(keyword)
 
     classification = keyword_classification
-    volume = keyword_volume.split("~")
-    product = keyword_product.split("~")
+    volume = keyword_total_query.split("~")
+    product = keyword_items.split("~")
     competitve = competitive_strength.split("~")
 
     task_group = []
