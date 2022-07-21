@@ -38,5 +38,7 @@ def search_volume(keyword):
 
     kwd_list = [keyword]
     kwds_string = ','.join(kwd_list)
+
     return_data = call_RelKwdStat(kwds_string)
+
     return return_data

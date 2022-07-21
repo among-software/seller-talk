@@ -8,11 +8,11 @@ from services.detail_category import category_list
 from services.related import web_doc, ad_cost
 
 
-async def get_detail(relation_keyword_stat, keyword, classification, total_query, items, competitve):
+async def get_detail(relation_keyword_stat, classification, total_query, items, competitve):
     total_num, category, naver_classification, ad_cost_info = await asyncio.gather(
         total_product.get_total_product(relation_keyword_stat['relKeyword']),
         category_list.crawling(relation_keyword_stat['relKeyword']),
-        web_doc.get_naver_web_doc(keyword),
+        web_doc.get_naver_web_doc(relation_keyword_stat['relKeyword']),
         ad_cost.search_volume(relation_keyword_stat['relKeyword']),
     )
     category = json.loads(category)['categories'][0]
@@ -96,12 +96,12 @@ def controller(keyword, keyword_classification, keyword_total_query, keyword_ite
     response = []
 
     loop = asyncio.new_event_loop()
+    print(search_volume_data)
     idx = 0
     # asyncio.set_event_loop(loop)
     for i in range(int(list_index[0]), len(search_volume_data['keywordList'])):
         task_group.append({
             "relation_keyword_stat": search_volume_data['keywordList'][i],
-            "keyword": keyword,
             "classification": classification,
             "total_query": total_query,
             "items": items,
@@ -114,29 +114,9 @@ def controller(keyword, keyword_classification, keyword_total_query, keyword_ite
             time.sleep(0.2)
         if len(response) > 20:
             idx = i
-            response.append({
-                'lastIndex': idx
-            })
             break
-    #
-    # if len(response) != 20:
-    #     for relation_keyword_stat in search_volume_data['keywordList'][20-len(response):-1]:
-    #         task_group.append({
-    #             "relation_keyword_stat": relation_keyword_stat,
-    #             "keyword": keyword,
-    #             "classification": classification,
-    #             "total_query": total_query,
-    #             "items": items,
-    #             "competitve": competitve
-    #         })
-    #
-    #         if len(task_group) == 5:
-    #             response += loop.run_until_complete(task_gather(task_group))
-    #             task_group = []
-    #             time.sleep(0.1)
-    #         if len(response) == 20:
-    #             break
+
     loop.close()
     response = [x for x in response if x is not None]
-    return response
+    return {'data': response, 'lastIndex': idx}
 
