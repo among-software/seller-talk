@@ -12,7 +12,7 @@ async def get_detail(relation_keyword_stat, keyword, classification, total_query
     total_num, category, naver_classification, ad_cost_info = await asyncio.gather(
         total_product.get_total_product(relation_keyword_stat['relKeyword']),
         category_list.crawling(relation_keyword_stat['relKeyword']),
-        web_doc.get_naver_web_doc(keyword),
+        web_doc.get_naver_web_doc(relation_keyword_stat['relKeyword']),
         ad_cost.search_volume(relation_keyword_stat['relKeyword']),
     )
     category = json.loads(category)['categories'][0]
