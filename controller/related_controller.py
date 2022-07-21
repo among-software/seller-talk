@@ -64,13 +64,14 @@ async def get_detail(relation_keyword_stat, keyword, classification, total_query
         'competition': competitive_strength,
         'category': category['title'][2],
         'classification': naver_classification,
-        'pc_ad_cost': ad_cost_info['pc_ad_cost'],
-        'mo_ad_cost': ad_cost_info['mo_ad_cost'],
-        'pc_ad_click_percentage': pc_ad_click_percentage,
-        'mo_ad_click_percentage': mo_ad_click_percentage,
-        'average_ad_click_percentage': ad_click_count_average,
-        'ad_click_competition': ad_click_competition,
-        'click_to_click_ad': click_to_click_ad
+        # 새로 추가된 부분
+        'pcAdCost': ad_cost_info['pc_ad_cost'],
+        'moAdCost': ad_cost_info['mo_ad_cost'],
+        'pcAdClickPercentage': pc_ad_click_percentage,
+        'moAdClickPercentage': mo_ad_click_percentage,
+        'averageAdClickPercentage': ad_click_count_average,
+        'adClickCompetition': ad_click_competition,
+        'clickToClickAd': click_to_click_ad
     }
 
 
