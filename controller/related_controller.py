@@ -117,11 +117,12 @@ def controller(keyword, keyword_classification, keyword_total_query, keyword_ite
             response = [i for i in response if i is not None]
             task_group = []
             time.sleep(0.1)
+
+        idx = i
         if len(response) > 20:
             break
-        idx = i
 
     loop.close()
     response = [x for x in response if x is not None]
-    return {'data': response, 'lastIndex': idx + 1}
+    return {'data': response, 'lastIndex': idx}
 
