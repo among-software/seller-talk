@@ -118,8 +118,8 @@ def controller(keyword, keyword_classification, keyword_total_query, keyword_ite
             task_group = []
             time.sleep(0.1)
         if len(response) > 20:
-            idx = i
             break
+        idx = i
 
     loop.close()
     response = [x for x in response if x is not None]
