@@ -5,6 +5,8 @@ from flask import Flask, request, make_response
 from controller import simple_data_controller, category_list_controller, detail_controller, related_controller
 from flask_cors import CORS, cross_origin
 import json
+
+
 app = Flask(__name__)
 
 CORS(app)
@@ -51,4 +53,5 @@ def related():
 
 
 if __name__ == "__main__":
-    app.run(debug=False, host='0.0.0.0')
+    from waitress import serve
+    serve(app, host='0.0.0.0', port=8080)
