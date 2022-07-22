@@ -116,7 +116,7 @@ def controller(keyword, keyword_classification, keyword_total_query, keyword_ite
             response += loop.run_until_complete(task_gather(task_group))
             response = [i for i in response if i is not None]
             task_group = []
-            time.sleep(0.1)
+            time.sleep(0.15)
 
         idx = i
         if len(response) >= 20:
