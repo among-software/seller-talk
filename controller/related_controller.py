@@ -123,5 +123,5 @@ def controller(keyword, keyword_classification, keyword_total_query, keyword_ite
 
     loop.close()
     response = [x for x in response if x is not None]
-    return {'data': response, 'lastIndex': idx}
+    return {'data': response, 'lastIndex': idx + 1}
 
