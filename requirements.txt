@@ -57,6 +57,7 @@ tqdm==4.64.0
 troposphere==4.0.2
 urllib3==1.26.9
 uvicorn==0.18.2
+waitress==2.1.2
 Werkzeug==2.1.2
 wsgi-request-logger==0.4.6
 yarl==1.7.2
