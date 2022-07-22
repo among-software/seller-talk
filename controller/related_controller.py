@@ -119,7 +119,7 @@ def controller(keyword, keyword_classification, keyword_total_query, keyword_ite
             time.sleep(0.1)
 
         idx = i
-        if len(response) > 20:
+        if len(response) >= 20:
             break
 
     loop.close()
