@@ -96,7 +96,7 @@ def controller(keyword, keyword_classification, keyword_total_query, keyword_ite
     total_query = keyword_total_query.split("~")
     items = keyword_items.split("~")
     competitve = competitive_strength.split("~")
-    list_index = list_index.split("~")
+    # list_index = list_index.split("~")
 
     task_group = []
     response = []
@@ -104,7 +104,7 @@ def controller(keyword, keyword_classification, keyword_total_query, keyword_ite
     loop = asyncio.new_event_loop()
     idx = 0
     # asyncio.set_event_loop(loop)
-    for i in range(int(list_index[0]), len(search_volume_data['keywordList'])):
+    for i in range(int(list_index), len(search_volume_data['keywordList'])):
         task_group.append({
             "relation_keyword_stat": search_volume_data['keywordList'][i],
             "classification": classification,
