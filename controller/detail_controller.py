@@ -41,9 +41,22 @@ def detail_controller(start_date, end_date, keyword):
     except:
         data_dict = {
             'data': daily,
-            'sex': None,
-            'device': None,
-            'ages': None,
+            'sex': {
+                "male": None,
+                "female": None
+            },
+            'device': {
+                "pc": None,
+                "mobile": None
+            },
+            'ages': {
+                "10대": None,
+                "20대": None,
+                "30대": None,
+                "40대": None,
+                "50대": None,
+                "60대": None
+            },
             'rank': keyword_rank_data
         }
 
