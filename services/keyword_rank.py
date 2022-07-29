@@ -16,9 +16,10 @@ async def keyword_rank(keyword):
         async with client.get(open_api_url) as resp:
             response = await resp.json()
             counter = 0
-
-            for i in response['shoppingResult']['products']:
-                if i['purchaseCnt'] <= 100:
-                    counter += 1
-
-            return counter
+            try:
+                for i in response['shoppingResult']['products']:
+                    if i['purchaseCnt'] <= 100:
+                        counter += 1
+                return counter
+            except:
+                return counter
