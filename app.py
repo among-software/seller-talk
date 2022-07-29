@@ -2,10 +2,9 @@ import asyncio
 
 import requests
 from flask import Flask, request, make_response
-from controller import simple_data_controller, category_list_controller, detail_controller, related_controller
+from controller import simple_data_controller, category_list_controller, detail_controller, related_controller, keyword_rank_controller
 from flask_cors import CORS, cross_origin
 import json
-
 
 app = Flask(__name__)
 
@@ -42,12 +41,12 @@ def detail():
 def related():
     try:
         return json.dumps(related_controller.controller(keyword=request.args.get('keyword'),
-                                                    keyword_classification=request.args.get('classification'),
-                                                    keyword_total_query=request.args.get('total-query'),
-                                                    keyword_items=request.args.get('items'),
-                                                    competitive_strength=request.args.get('competition'),
-                                                    list_index=request.args.get('list-index')),
-                      ensure_ascii=False)
+                                                        keyword_classification=request.args.get('classification'),
+                                                        keyword_total_query=request.args.get('total-query'),
+                                                        keyword_items=request.args.get('items'),
+                                                        competitive_strength=request.args.get('competition'),
+                                                        list_index=request.args.get('list-index')),
+                          ensure_ascii=False)
     except:
         return make_response('Internal Server Error', 500)
 
