@@ -1,12 +1,17 @@
 from services.detail import naver_smart_store, daily_search, basic_ratio
-import json
+import json, asyncio
 from services import keyword_rank
+
+
+async def rank(keyword):
+    keyword = await keyword_rank.keyword_rank(keyword)
+    return keyword
 
 
 def detail_controller(start_date, end_date, keyword):
     one_day_search = basic_ratio.search_volume(keyword)
     daily = daily_search.search_volume(start_date, end_date, keyword, one_day_search)
-    keyword_rank_data = keyword_rank.keyword_rank(keyword)
+    keyword_rank_data = asyncio.run(rank(keyword))
 
     try:
         sex = naver_smart_store.get_shopping_keyword_trend_by_gender(start_date, end_date, keyword)
