@@ -2,7 +2,7 @@ import asyncio
 
 import requests
 from flask import Flask, request, make_response
-from controller import simple_data_controller, category_list_controller, detail_controller, related_controller, keyword_rank_controller
+from controller import simple_data_controller, category_list_controller, detail_controller, related_controller
 from flask_cors import CORS, cross_origin
 import json
 
